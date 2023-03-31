@@ -8,6 +8,9 @@ on:
   # Allow to run this workflow manually
   workflow_dispatch:
 
+env:
+  DB_CONNECTION_STRING: postgresql://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs
+
 jobs:
 
   generate-erm-diagrams:
@@ -28,7 +31,7 @@ jobs:
           npm install -g @mermaid-js/mermaid-cli
           go install github.com/KarnerTh/mermerd@latest
       - name: Generate mermaid ER diagram
-        run: mermerd --runConfig mermerdConfig.yaml -o erdiagram.mmd
+        run: mermerd --runConfig mermerdConfig.yaml -o erdiagram.mmd -c $DB_CONNECTION_STRING
       - name: Convert .mmd to .svg
         run: mmdc -i erdiagram.mmd -o erdiagram.svg
       - name: Upload .svg
