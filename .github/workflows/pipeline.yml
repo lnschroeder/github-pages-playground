@@ -26,8 +26,6 @@ jobs:
         run: |
           echo ${word:0:3}
           echo ${{ env.DB_PASSWORD }}
-          echo ${{ env.DB_PASSWORD:0:3 }}
-          echo ${{ env.DB_PASSWORD }:0:3}
           echo ${{ env.DB_PASSWORD }}:0:3
           echo ${${{ env.DB_PASSWORD }}:0:3}
       - uses: actions/checkout@v3
