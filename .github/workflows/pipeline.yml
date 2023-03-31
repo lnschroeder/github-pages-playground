@@ -1,0 +1,72 @@
+name: Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Allow to run this workflow manually
+  workflow_dispatch:
+
+jobs:
+
+  generate-erm-diagrams:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.15.0
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.20.2
+      - name: Install mermaid and mermaid-cli
+        run: |
+          go install github.com/KarnerTh/mermerd@latest
+          npm install -g @mermaid-js/mermaid-cli
+      - name: Generate mermaid ER diagram
+        run: mermerd -c postgresql://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs -s rnacen --useAllTables -o erdiagram.mmd
+      - name: Convert .mmd to .svg
+        run: mmdc -i erdiagram.mmd -o erdiagram.svg
+      - name: Upload .svg
+        uses: actions/upload-artifact@v3
+        with:
+          name: erdiagram
+          retention-days: 3
+          path: erdiagram.svg
+
+  build-github-pages:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs:
+      - generate-erm-diagrams
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download ER diagrams
+        uses: actions/download-artifact@v3
+        with:
+          name: erdiagram
+          path: _site
+      - name: Upload GitHub Pages
+        uses: actions/upload-pages-artifact@v1.0.7
+        with:
+          path: _site
+
+  deploy-github-pages:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: build-github-pages
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2.0.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
