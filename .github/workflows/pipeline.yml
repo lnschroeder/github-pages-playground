@@ -11,7 +11,7 @@ on:
 env:
   DB_DRIVER: postgresql
   DB_USER: reader
-  DB_PASSWORD: ${{ vars.DB_PASSWORD2 }}
+  DB_PASSWORD: NWDMCE5xdipIjRrp
   DB_HOST: hh-pgsql-public.ebi.ac.uk
   DB_PORT: 5432
   DB_DATABASE: pfmegrnargs  
@@ -22,9 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - name: debugging
-        run: |
-          python3 -c 'import os; print(os.environ)'
       - uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
