@@ -36,7 +36,7 @@ jobs:
           npm install -g @mermaid-js/mermaid-cli
           go install github.com/KarnerTh/mermerd@latest
       - name: Generate mermaid ER diagram
-        run: mermerd --runConfig mermerdConfig.yaml -o erdiagram.mmd -c ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
+        run: mermerd --runConfig mermerdConfig.yaml -o erdiagram.mmd -c ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ secrets.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
       - name: Convert .mmd to .svg
         run: mmdc -i erdiagram.mmd -o erdiagram.svg
       - name: Upload .svg
