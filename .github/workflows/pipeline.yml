@@ -22,12 +22,12 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.20.2
-      - name: Install mermaid and mermaid-cli
+      - name: Install mermaid-cli and mermerd
         run: |
-          go install github.com/KarnerTh/mermerd@latest
           npm install -g @mermaid-js/mermaid-cli
+          go install github.com/KarnerTh/mermerd@latest
       - name: Generate mermaid ER diagram
-        run: mermerd -c postgresql://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs -s rnacen --useAllTables -o erdiagram.mmd
+        run: mermerd --runConfig mermerdConfig.yaml -o erdiagram.mmd
       - name: Convert .mmd to .svg
         run: mmdc -i erdiagram.mmd -o erdiagram.svg
       - name: Upload .svg
