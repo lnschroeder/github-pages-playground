@@ -28,7 +28,7 @@ jobs:
           npm install -g @mermaid-js/mermaid-cli
           go install github.com/KarnerTh/mermerd@latest
       - name: Generate mermaid ER diagram
-        run: mermerd --runConfig mermerdConfig.yaml -o erdiagram.mmd
+        run: mermerd -c postgresql://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs -s rnacen --selectedTables rnc_rna_precomputed,rnc_gene_status -o erdiagram.mmd
       - name: Convert .mmd to .svg
         run: mmdc -i erdiagram.mmd -o erdiagram.svg
       - name: Upload .svg
