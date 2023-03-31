@@ -1,3 +1,5 @@
 connectionString: postgresql://reader:NWDMCE5xdipIjRrp@hh-pgsql-public.ebi.ac.uk:5432/pfmegrnargs
 schema: rnacen
-selectedTables: rnc_rna_precomputed,rnc_gene_status
+selectedTables: 
+  - rnc_rna_precomputed
+  - rnc_gene_status
