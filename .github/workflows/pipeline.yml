@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate mermaid ER diagram
-        uses: lnschroeder/export-mermaid-erdiagram-action@latest
+        uses: lnschroeder/export-mermaid-erdiagram-action@v1.0.0
         with: 
           config: mermerdConfig.yaml
           output: test.svg
