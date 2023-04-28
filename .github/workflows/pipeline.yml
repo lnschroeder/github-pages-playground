@@ -35,6 +35,17 @@ jobs:
           name: erdiagram
           retention-days: 3
           path: erdiagram.svg
+      - name: Pushes test file
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: test2.md
+          destination_repo: lnschroeder/github-pages-playground-reports
+          destination_folder: test-dir
+          user_email: example@email.com
+          user_name: github-pages-playgroud
+          commit_message: A custom message for the commit
   
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
