@@ -52,7 +52,7 @@ jobs:
           git config user.email "<>"
           git add test.txt
           git commit -m 'Test commit'
-          git push origin master    
+          git push origin main    
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
