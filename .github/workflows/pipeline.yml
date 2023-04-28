@@ -52,11 +52,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-      - run: |
+      - name: Push files if they have changed
+        run: |
           git diff --quiet --no-index this-erdiagram.svg latest-erdiagram.svg || (
             git config user.name "GitHubAction"
             git config user.email "<>"
-              mv this-erdiagram.svg latest-erdiagram.svg ; \
+            mv this-erdiagram.svg latest-erdiagram.svg ; \
               cp latest-erdiagram.svg $NOW.svg ; \
               git add latest-erdiagram.svg $NOW.svg ; \
               git commit -m "${{ github.event.head_commit.message }}" \
