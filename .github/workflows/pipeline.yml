@@ -50,12 +50,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-      - run: mv erdiagram.svg ${{ github.sha }}.svg
+      - run: mv erdiagram.svg ${{ github.run_number }}.svg
       - run: git config user.name "GitHubAction"
       - run: git config user.email "<>"
-      - run: git add ${{ github.sha }}.svg
+      - run: git add ${{ github.run_number }}.svg
       - run: git commit -m "${{ github.event.head_commit.message }}" -m "From commit ${{ github.repository }}@${{ github.sha }}" || echo "Ignoring commit failure and proceed"
       - run: git push origin main    
+      - run: echo "$(printf "%02d" ${{ github.run_number }})"
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
