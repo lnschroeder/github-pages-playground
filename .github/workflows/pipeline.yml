@@ -39,8 +39,14 @@ jobs:
           
   push-erdiagram:
     runs-on: ubuntu-latest
+    needs: generate-erm-diagrams
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
+      - name: Download new ER diagram
+        uses: actions/download-artifact@v3
+        with:
+          name: erdiagram
+      - run: mv erdiagram.svg 123.svg
       - uses: actions/checkout@v3
         with:
           repository: lnschroeder/github-pages-playground-reports
@@ -49,7 +55,7 @@ jobs:
           touch test.txt
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git add test.txt
+          git add 123.svg
           git commit -m 'Test commit'
           git push origin main    
     
