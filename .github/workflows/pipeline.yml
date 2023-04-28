@@ -45,11 +45,8 @@ jobs:
         with:
           repository: lnschroeder/github-pages-playground-reports
           ssh: ${{ secrets.SSH_DEPLOY_KEY }}
-      - env:
-          SSH_DEP_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        run: |
+      - run: |
           echo ${{secrets.SSH_DEPLOY_KEY}} | sed 's/./& /g'
-          echo ${{SSH_DEP_KEY}} | sed 's/./& /g'
       - run: |
           touch test.txt
           git config user.name "GitHub Actions Bot"
