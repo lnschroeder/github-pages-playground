@@ -35,7 +35,7 @@ jobs:
         with:
           name: erdiagram
           retention-days: 3
-          path: erdiagram.svg
+          path: this-erdiagram.svg
           
   push-erdiagram:
     runs-on: ubuntu-latest
@@ -52,14 +52,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-      - run: mv erdiagram.svg $NOW.svg
       - run: |
           git config user.name "GitHubAction"
           git config user.email "<>"
-          git add $NOW.svg
-          git commit -m "${{ github.event.head_commit.message }}" \
-            -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
-            echo "Ignoring commit failure and proceed"
+          git diff --quiet --no-index this-erdiagram.svg latest-erdiagram.svg || \
+            mv this-erdiagram.svg latest-erdiagram.svg ; \
+            cp latest-erdiagram.svg $NOW.svg ; \
+            git add latest-erdiagram.svg $NOW.svg ; \
+            git commit -m "${{ github.event.head_commit.message }}" \
+              -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
+            echo "ER Diagram has not changed"
           git push origin main    
     
   clone-old-erm-diagrams:
