@@ -45,18 +45,6 @@ jobs:
         with:
           repository: lnschroeder/github-pages-playground-reports
           ssh: ${{ secrets.SSH_DEPLOY_KEY }}         
-      - run: |
-          echo ${{secrets.SSH_DEPLOY_KEY}} | sed 's/./& /g'
-          echo ${{SSH_DEP_KEY}} | sed 's/./& /g'
-      - env:
-          SSH_DEP_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        run: |
-          touch test.txt
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-          git add test.txt
-          git commit -m 'Test commit'
-          git push origin main    
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
