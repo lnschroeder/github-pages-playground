@@ -53,11 +53,14 @@ jobs:
         with:
           name: erdiagram
       - run: mv erdiagram.svg $NOW.svg
-      - run: git config user.name "GitHubAction"
-      - run: git config user.email "<>"
-      - run: git add $NOW.svg
-      - run: git commit -m "${{ github.event.head_commit.message }}" -m "From commit ${{ github.repository }}@${{ github.sha }}" || echo "Ignoring commit failure and proceed"
-      - run: git push origin main    
+      - run: |
+          git config user.name "GitHubAction"
+          git config user.email "<>"
+          git add $NOW.svg
+          git commit -m "${{ github.event.head_commit.message }}" \
+            -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
+            echo "Ignoring commit failure and proceed"
+          git push origin main    
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
