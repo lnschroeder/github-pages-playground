@@ -52,10 +52,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-      - run: mv erdiagram.svg ${{ FILENAME }}.svg
+      - run: mv erdiagram.svg $FILENAME.svg
       - run: git config user.name "GitHubAction"
       - run: git config user.email "<>"
-      - run: git add ${{ FILENAME }}.svg
+      - run: git add $FILENAME.svg
       - run: git commit -m "${{ github.event.head_commit.message }}" -m "From commit ${{ github.repository }}@${{ github.sha }}" || echo "Ignoring commit failure and proceed"
       - run: git push origin main    
     
