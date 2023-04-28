@@ -54,7 +54,7 @@ jobs:
       - run: git config user.name "GitHubAction"
       - run: git config user.email "<>"
       - run: git add ${{ github.sha }}.svg
-      - run: git commit -m ${{ github.message }} || echo "ignore commit failure, proceed"
+      - run: git commit -m ${{ github.event.head_commit.message }} || echo "ignore commit failure, proceed"
       - run: git push origin main    
     
   clone-old-erm-diagrams:
