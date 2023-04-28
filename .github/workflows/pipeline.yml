@@ -35,18 +35,25 @@ jobs:
           name: erdiagram
           retention-days: 3
           path: erdiagram.svg
-      - name: Pushes test file
-        uses: dmnemec/copy_file_to_another_repo_action@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  push-erdiagram:
+    runs-on: ubuntu-latest
+    needs:
+      - generate-erm-diagrams
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v3
         with:
-          source_file: erdiagram.svg
-          destination_repo: lnschroeder/github-pages-playground-reports
-          user_email: example@email.com
-          user_name: github-pages-playgroud
-          commit_message: A custom message for the commit
-  
+          repository: lnschroeder/github-pages-playground-reports
+          ssh: ${{ secrets.SSH_DEPLOY_KEY }}
+      - run: |
+          touch test.txt
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git add test.txt
+          git commit -m 'Test commit'
+          git push origin master    
+    
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
