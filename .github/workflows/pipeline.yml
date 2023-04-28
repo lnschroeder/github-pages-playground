@@ -56,7 +56,7 @@ jobs:
           git config user.email "<>"
           git add 123.svg
           git commit -m 'Test commit'
-          git push origin main    
+          git push -f origin main    
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
