@@ -54,7 +54,7 @@ jobs:
       - run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git add erdiagram.svg
+          git add 123.svg
           git commit -m 'Test commit'
           git push origin main    
     
