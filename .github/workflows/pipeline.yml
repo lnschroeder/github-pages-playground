@@ -50,8 +50,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-      - run: mv erdiagram.svg 123.svg
-      - run: git config user.name "GitHub Actions Bot"
+      - run: mv erdiagram.svg ${{ github.sha }}.svg
+      - run: git config user.name ${{ github.message }}
       - run: git config user.email "<>"
       - run: git add 123.svg
       - run: git commit -m 'bla' || echo "ignore commit failure, proceed"
