@@ -54,7 +54,7 @@ jobs:
       - run: git config user.name "GitHub Actions Bot"
       - run: git config user.email "<>"
       - run: git add 123.svg
-      - run: git diff-index --quiet HEAD || git commit -m 'bla'
+      - run: git commit -m 'bla' || echo "ignore commit failure, proceed"
       - run: git push origin main    
     
   clone-old-erm-diagrams:
