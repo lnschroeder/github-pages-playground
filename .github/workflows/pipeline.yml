@@ -38,8 +38,6 @@ jobs:
           
   push-erdiagram:
     runs-on: ubuntu-latest
-    needs:
-      - generate-erm-diagrams
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v3
