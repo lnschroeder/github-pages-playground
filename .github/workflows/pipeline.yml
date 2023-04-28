@@ -52,10 +52,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-      - run: |
+      - if: git diff --quiet --no-index this-erdiagram.svg latest-erdiagram.svg
+        run: |
           git config user.name "GitHubAction"
           git config user.email "<>"
-          git diff --quiet --no-index this-erdiagram.svg latest-erdiagram.svg || \
             mv this-erdiagram.svg latest-erdiagram.svg ; \
             cp latest-erdiagram.svg $NOW.svg ; \
             git add latest-erdiagram.svg $NOW.svg ; \
