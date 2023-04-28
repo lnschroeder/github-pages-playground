@@ -42,20 +42,19 @@ jobs:
     needs: generate-erm-diagrams
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: lnschroeder/github-pages-playground-reports
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - name: Download new ER diagram
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
       - run: mv erdiagram.svg 123.svg
-      - uses: actions/checkout@v3
-        with:
-          repository: lnschroeder/github-pages-playground-reports
-          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - run: |
-          touch test.txt
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git add 123.svg
+          git add erdiagram.svg
           git commit -m 'Test commit'
           git push origin main    
     
