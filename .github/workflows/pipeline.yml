@@ -42,7 +42,7 @@ jobs:
     needs: generate-erm-diagrams
     if: ${{ github.ref == 'refs/heads/main' }}
     env: 
-      FILENAME: "$(date +%Y%m%dT%H%M%S)"
+      FILENAME: ${{ date +%Y%m%dT%H%M%S }}
     steps:
       - uses: actions/checkout@v3
         with:
