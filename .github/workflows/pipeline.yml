@@ -47,7 +47,7 @@ jobs:
           repository: lnschroeder/github-pages-playground-reports
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+        run: echo "NOW=$(date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
       - name: Download new ER diagram
         uses: actions/download-artifact@v3
         with:
