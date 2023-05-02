@@ -29,7 +29,7 @@ jobs:
         with: 
           config: mermerdConfig.yaml
           output: this-erdiagram
-          convertTo: .svg
+          convertTo: svg
           connectionString: ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
       - name: Upload mermaid diagram
         uses: actions/upload-artifact@v3
@@ -60,12 +60,12 @@ jobs:
           git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd || (
             git config user.name "GitHubAction"
             git config user.email "<>"
-            mv this-erdiagram.mmd latest-erdiagram.mmd ; \
-              cp latest-erdiagram.mmd $NOW.mmd ; \
-              cp this-erdiagram.svg $NOW.svg ; \
-              git add latest-erdiagram.mmd $NOW.mmd $NOW.svg ; \
-              git commit -m "${{ github.event.head_commit.message }}" \
-                -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
+            mv this-erdiagram.mmd latest-erdiagram.mmd
+            cp latest-erdiagram.mmd $NOW.mmd
+            mv this-erdiagram.svg $NOW.svg
+            git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
+            git commit -m "${{ github.event.head_commit.message }}"
+              -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
               echo "ER Diagram has not changed"
             git push origin main
           )    
