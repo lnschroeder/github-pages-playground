@@ -52,6 +52,7 @@ jobs:
         with:
           name: erdiagram
       - name: Check if the erdiagram has changed 
+        id: erdiagram-change
         run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
         continue-on-error: true
       - name: Convert .mmd to .svg
@@ -60,7 +61,7 @@ jobs:
           filename: this-erdiagram
           extractFromDB: false
           convertTo: svg
-        if: failure()
+        if: steps.erdiagram-change.outcome != 'success'
       - name: Push files if they have changed
         run: |
           git config user.name "GitHubAction"
@@ -73,7 +74,7 @@ jobs:
             -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
             echo "ER Diagram has not changed"
           git push origin main
-        if: failure()
+        if: steps.erdiagram-change.outcome != 'success'
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
