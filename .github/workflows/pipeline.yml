@@ -73,6 +73,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: lnschroeder/github-pages-playground-reports
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - name: Upload README.md
         uses: actions/upload-artifact@v3
         with:
