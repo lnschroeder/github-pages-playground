@@ -25,6 +25,7 @@ jobs:
       - name: Generate mermaid ER diagram
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with: 
+          extractFromDB: true
           config: mermerdConfig.yaml
           filename: this-erdiagram
           connectionString: ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
@@ -52,6 +53,7 @@ jobs:
           name: erdiagram
       - name: Check if the erdiagram has changed 
         run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
+        continue-on-error: true
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with: 
