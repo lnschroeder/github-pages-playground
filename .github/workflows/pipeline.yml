@@ -17,7 +17,6 @@ env:
   DB_DATABASE: pfmegrnargs  
   
 jobs:
-
   generate-erm-diagrams:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -35,8 +34,7 @@ jobs:
         with:
           name: erdiagram
           retention-days: 3
-          path: |
-            this-erdiagram.mmd
+          path: this-erdiagram.mmd
           
   push-erdiagram:
     runs-on: ubuntu-latest
