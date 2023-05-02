@@ -30,12 +30,12 @@ jobs:
           config: mermerdConfig.yaml
           output: this-erdiagram.mmd
           connectionString: ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
-      - name: Upload .svg
+      - name: Upload mermaid diagram
         uses: actions/upload-artifact@v3
         with:
           name: erdiagram
           retention-days: 3
-          path: this-erdiagram.svg
+          path: this-erdiagram.mmd
           
   push-erdiagram:
     runs-on: ubuntu-latest
@@ -54,12 +54,12 @@ jobs:
           name: erdiagram
       - name: Push files if they have changed
         run: |
-          git diff --quiet --no-index this-erdiagram.svg latest-erdiagram.svg || (
+          git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd || (
             git config user.name "GitHubAction"
             git config user.email "<>"
-            mv this-erdiagram.svg latest-erdiagram.svg ; \
-              cp latest-erdiagram.svg $NOW.svg ; \
-              git add latest-erdiagram.svg $NOW.svg ; \
+            mv this-erdiagram.mmd latest-erdiagram.mmd ; \
+              cp latest-erdiagram.mmd $NOW.mmd ; \
+              git add latest-erdiagram.mmd $NOW.mmd ; \
               git commit -m "${{ github.event.head_commit.message }}" \
                 -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
               echo "ER Diagram has not changed"
