@@ -27,8 +27,7 @@ jobs:
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with: 
           config: mermerdConfig.yaml
-          output: this-erdiagram
-          convertTo: svg
+          filename: this-erdiagram
           connectionString: ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
       - name: Upload mermaid diagram
         uses: actions/upload-artifact@v3
@@ -56,6 +55,13 @@ jobs:
           name: erdiagram
       - name: Check if the erdiagram has changed 
         run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
+      - name: Convert .mmd to .svg
+        uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
+        with: 
+          filename: this-erdiagram
+          extractFromDB: false
+          convertTo: svg
+        if: failure()
       - name: Push files if they have changed
         run: |
           git config user.name "GitHubAction"
