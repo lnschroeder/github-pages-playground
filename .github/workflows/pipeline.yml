@@ -15,7 +15,6 @@ env:
   DB_HOST: hh-pgsql-public.ebi.ac.uk
   DB_PORT: 5432
   DB_DATABASE: pfmegrnargs  
-  SSH_DEP_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
   
 jobs:
 
