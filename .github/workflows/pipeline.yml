@@ -28,7 +28,7 @@ jobs:
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with: 
           config: mermerdConfig.yaml
-          output: this-erdiagram.svg
+          output: this-erdiagram.mmd
           connectionString: ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
       - name: Upload .svg
         uses: actions/upload-artifact@v3
