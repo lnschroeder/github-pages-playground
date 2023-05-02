@@ -54,20 +54,21 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
+      - name: Check if the erdiagram has changed 
+        run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
       - name: Push files if they have changed
         run: |
-          git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd || (
-            git config user.name "GitHubAction"
-            git config user.email "<>"
-            mv this-erdiagram.mmd latest-erdiagram.mmd
-            cp latest-erdiagram.mmd $NOW.mmd
-            mv this-erdiagram.svg $NOW.svg
-            git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
-            git commit -m "${{ github.event.head_commit.message }}" \
-              -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
-              echo "ER Diagram has not changed"
-            git push origin main
-          )    
+          git config user.name "GitHubAction"
+          git config user.email "<>"
+          mv this-erdiagram.mmd latest-erdiagram.mmd
+          cp latest-erdiagram.mmd $NOW.mmd
+          mv this-erdiagram.svg $NOW.svg
+          git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
+          git commit -m "${{ github.event.head_commit.message }}" \
+            -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
+            echo "ER Diagram has not changed"
+          git push origin main
+        if: failure()
     
   clone-old-erm-diagrams:
     runs-on: ubuntu-latest
