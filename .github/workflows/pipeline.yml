@@ -45,16 +45,13 @@ jobs:
         with:
           repository: lnschroeder/github-pages-playground-reports
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - run: |
-          cd entity-relationship-diagrams
-          pwd
-          ls -l
       - name: Set current timestamp as environment variable
         run: echo "NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
       - name: Download mermaid diagram
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
+          path: ./entity-relationship-diagrams/
       - name: Check if the erdiagram has changed 
         id: erdiagram-change
         run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
@@ -62,7 +59,7 @@ jobs:
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with: 
-          filename: this-erdiagram
+          filename: entity-relationship-diagrams/this-erdiagram
           extractFromDB: false
           convertTo: svg
         if: steps.erdiagram-change.outcome != 'success'
@@ -79,6 +76,7 @@ jobs:
             echo "ER Diagram has not changed"
           git push origin main
         if: steps.erdiagram-change.outcome != 'success'
+        working-directory: ./entity-relationship-diagrams/
           
   build-github-pages:
     runs-on: ubuntu-latest
