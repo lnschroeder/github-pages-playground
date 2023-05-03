@@ -45,7 +45,10 @@ jobs:
         with:
           repository: lnschroeder/github-pages-playground-reports
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - run: cd entity-relationship-diagrams
+      - run: |
+          cd entity-relationship-diagrams
+          pwd
+          ls -l
       - name: Set current timestamp as environment variable
         run: echo "NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
       - name: Download mermaid diagram
@@ -76,21 +79,6 @@ jobs:
             echo "ER Diagram has not changed"
           git push origin main
         if: steps.erdiagram-change.outcome != 'success'
-    
-  clone-old-erm-diagrams:
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: lnschroeder/github-pages-playground-reports
-          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - name: Upload README.md
-        uses: actions/upload-artifact@v3
-        with:
-          name: erdiagram
-          retention-days: 3
-          path: README.md
           
   build-github-pages:
     runs-on: ubuntu-latest
