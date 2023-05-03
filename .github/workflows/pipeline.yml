@@ -55,7 +55,6 @@ jobs:
         id: erdiagram-change
         run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
         continue-on-error: true
-      - run: ls -l
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with: 
