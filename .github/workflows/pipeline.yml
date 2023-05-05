@@ -73,7 +73,8 @@ jobs:
           mv this-erdiagram.svg $NOW.svg
           git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
           git commit -m "${{ github.event.head_commit.message }}" \
-            -m "From commit ${{ github.repository }}@${{ github.sha }}" || \ 
+            -m "From commit ${{ github.repository }}@${{ github.sha }}" \
+            -m "${{ github.server_url }}/commit/${{ github.sha }}" || \ 
             echo "ER Diagram has not changed"
           git push origin main
         if: steps.erdiagram-change.outcome != 'success'
