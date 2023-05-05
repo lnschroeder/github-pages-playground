@@ -1,4 +1,11 @@
-schema: rnacen
-selectedTables: 
-  #- rnc_rna_precomputed
-  - rnc_gene_status
+schema: public
+useAllTables: False
+selectedTables:
+  - doc_unit
+  - norms
+  - keyword
+  - previous_decision
+connectionString: postgresql://test:test@localhost:5432/neuris
+showDescriptions:
+  - columnComments
+  - enumValues

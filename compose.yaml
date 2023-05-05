@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:12-alpine
+    extra_hosts:
+      - localhost:host-gateway
+    restart: always
+    container_name: db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=neuris
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+    ports:
+      - 5432:5432
+
+  flyway-migrate:
+    image: flyway/flyway
+    container_name: flyway-migrate
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://db:5432/neuris
+    command: -user=test -password=test migrate
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql
+    depends_on:
+      - db
+
+  mermerd:
+    image: alpine:3.17.3
+    extra_hosts:
+      - localhost:host-gateway
+    container_name: mermerd
+    working_dir: /mermerd/
+    volumes:
+      - ./:/app
+    command:
+      - sh
+      - -c
+      - |
+        wget -c https://github.com/KarnerTh/mermerd/releases/download/v0.7.0/mermerd_0.7.0_linux_amd64.tar.gz
+        apk add libc6-compat
+        tar -xf mermerd_0.7.0_linux_amd64.tar.gz
+        ./mermerd --runConfig /app/mermerdConfig.yaml -o /app/this-erdiagram.mmd --debug
+        chown $MY_UID:$MY_GID /app/this-erdiagram.mmd
+    depends_on:
+      flyway-migrate:
+        condition: service_completed_successfully
+
+volumes:
+  db-data:

@@ -23,12 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate mermaid ER diagram
-        uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
-        with: 
-          extractFromDB: true
-          config: mermerdConfig.yaml
-          filename: this-erdiagram
-          connectionString: ${{ env.DB_DRIVER }}://${{ env.DB_USER }}:${{ env.DB_PASSWORD }}@${{ env.DB_HOST }}:${{ env.DB_PORT }}/${{ env.DB_DATABASE }}
+        run: docker compose up mermerd
+      - run: ls -l
       - name: Upload mermaid diagram
         uses: actions/upload-artifact@v3
         with:
