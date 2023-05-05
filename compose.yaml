@@ -19,7 +19,7 @@ services:
     container_name: flyway-clean
     environment:
       - FLYWAY_URL=jdbc:postgresql://db:5432/neuris
-    command: -user=test -password=test -cleanDisabled=false clean
+    command: -user=test -password=test -cleanDisabled=false repair
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql
     depends_on:
@@ -30,7 +30,7 @@ services:
     container_name: flyway-migrate
     environment:
       - FLYWAY_URL=jdbc:postgresql://db:5432/neuris
-    command: -user=test -password=test -cleanDisabled=false migrate
+    command: -user=test -password=test migrate
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql
     depends_on:
