@@ -69,7 +69,8 @@ jobs:
           mv this-erdiagram.svg $NOW.svg
           git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
           git commit -m "${{ github.event.head_commit.message }}" \
-            -m "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" || \ 
+            -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" || \
+            -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ github.repository }}-reports/main/entity-relationship-diagrams/$NOW.mmd"
             echo "ER Diagram has not changed"
           git push origin main
         if: steps.erdiagram-change.outcome != 'success'
