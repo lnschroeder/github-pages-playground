@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate mermaid ER diagram
-        run: docker compose up mermerd
+        run: docker compose up --quiet-pull mermerd
       - name: Upload mermaid diagram
         uses: actions/upload-artifact@v3
         with:

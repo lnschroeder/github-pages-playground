@@ -22,8 +22,6 @@ services:
 
   flyway-migrate:
     image: flyway/flyway:9-alpine
-    options:
-      --quiet-pull
     container_name: flyway-migrate
     environment:
       - FLYWAY_URL=jdbc:postgresql://db:5432/db
