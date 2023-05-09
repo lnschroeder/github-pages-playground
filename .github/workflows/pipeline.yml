@@ -24,7 +24,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Generate mermaid ER diagram
         run: docker compose up mermerd
-      - run: ls -l
+        continue-on-error: true
+      - run: docker compose logs
       - name: Upload mermaid diagram
         uses: actions/upload-artifact@v3
         with:
