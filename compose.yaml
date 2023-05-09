@@ -17,8 +17,10 @@ services:
   flyway-migrate:
     image: flyway/flyway
     container_name: flyway-migrate
+    extra_hosts:
+      - localhost:host-gateway
     environment:
-      - FLYWAY_URL=jdbc:postgresql://db:5432/neuris
+      - FLYWAY_URL=jdbc:postgresql://localhost:5432/neuris
     command: -user=test -password=test -cleanDisabled=false clean migrate
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql
