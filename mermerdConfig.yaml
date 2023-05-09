@@ -5,7 +5,6 @@ selectedTables:
   - norms
   - keyword
   - previous_decision
-connectionString: postgresql://user:pw@localhost:5432/db
 showDescriptions:
   - columnComments
   - enumValues

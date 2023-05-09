@@ -25,7 +25,7 @@ services:
     image: flyway/flyway:9-alpine
     container_name: flyway-migrate
     environment:
-      - FLYWAY_URL=jdbc:postgresql://db:5432/db
+      - FLYWAY_URL=jdbc:postgresql://db:5432/${POSTGRES_DATABASE}
     command: -user=user -password=pw -cleanDisabled=false clean migrate
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql
@@ -48,8 +48,12 @@ services:
         wget -c https://github.com/KarnerTh/mermerd/releases/download/v0.7.0/mermerd_0.7.0_linux_amd64.tar.gz
         apk add libc6-compat
         tar -xf mermerd_0.7.0_linux_amd64.tar.gz
-        ./mermerd --runConfig /app/mermerdConfig.yaml -o /app/this-erdiagram.mmd --debug
-        chown $MY_UID:$MY_GID /app/this-erdiagram.mmd
+        ./mermerd \
+          --runConfig /app/mermerdConfig.yaml \
+          -c postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DATABASE} \
+          -o /app/this-erdiagram.mmd \
+          --debug
+        chown ${MY_UID}:${MY_GID} /app/this-erdiagram.mmd
     depends_on:
       flyway-migrate:
         condition: service_completed_successfully
