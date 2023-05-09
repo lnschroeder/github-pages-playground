@@ -5,7 +5,7 @@ selectedTables:
   - norms
   - keyword
   - previous_decision
-connectionString: postgresql://test:test@localhost:5432/neuris
+connectionString: postgresql://user:pw@localhost:5432/db
 showDescriptions:
   - columnComments
   - enumValues
