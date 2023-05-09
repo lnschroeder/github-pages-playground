@@ -8,14 +8,6 @@ on:
   # Allow to run this workflow manually
   workflow_dispatch:
 
-env:
-  DB_DRIVER: postgresql
-  DB_USER: reader
-  DB_PASSWORD: NWDMCE5xdipIjRrp
-  DB_HOST: hh-pgsql-public.ebi.ac.uk
-  DB_PORT: 5432
-  DB_DATABASE: pfmegrnargs
-
 jobs:
   generate-entity-relationship-model:
     runs-on: ubuntu-latest

@@ -30,18 +30,26 @@ services:
     extra_hosts:
       - localhost:host-gateway
     container_name: mermerd
-    working_dir: /mermerd/
+    working_dir: /app/
     volumes:
-      - ./:/app
+      - ./:/app/
     command:
       - sh
       - -c
       - |
-        wget -c https://github.com/KarnerTh/mermerd/releases/download/v0.7.0/mermerd_0.7.0_linux_amd64.tar.gz
         apk add libc6-compat
-        tar -xf mermerd_0.7.0_linux_amd64.tar.gz
-        ./mermerd --runConfig /app/mermerdConfig.yaml -o /app/this-erdiagram.mmd --debug
-        chown $MY_UID:$MY_GID /app/this-erdiagram.mmd
+        ./mermerd --runConfig mermerdConfig.yaml -o this-erdiagram.mmd --debug
+        chown $MY_UID:$MY_GID this-erdiagram.mmd
+#    working_dir: /mermerd/
+#    command:
+#      - sh
+#      - -c
+#      - |
+#        wget -c https://github.com/KarnerTh/mermerd/releases/download/v0.7.0/mermerd_0.7.0_linux_amd64.tar.gz
+#        apk add libc6-compat
+#        tar -xf mermerd_0.7.0_linux_amd64.tar.gz
+#        ./mermerd --runConfig /app/mermerdConfig.yaml -o /app/this-erdiagram.mmd --debug
+#        chown $MY_UID:$MY_GID /app/this-erdiagram.mmd
     depends_on:
       flyway-migrate:
         condition: service_completed_successfully
