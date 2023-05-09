@@ -51,7 +51,7 @@ jobs:
         if: steps.erdiagram-change.outcome != 'success'
       - name: Push diagram files if the schema has changed
         run: |
-          echo "NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
+          NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
           git config user.name "GitHubAction"
           git config user.email "<>"
           mv this-erdiagram.mmd latest-erdiagram.mmd

@@ -16,3 +16,5 @@ CREATE TABLE IF NOT EXISTS
     nextnumber INT NOT NULL,
     currentyear INT NOT NULL
   );
+
+COMMENT ON column document_number_counter.id IS 'this is a column comment'
