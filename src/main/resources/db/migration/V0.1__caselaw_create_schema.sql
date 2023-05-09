@@ -1,3 +1,5 @@
+CREATE TYPE status AS ENUM ('active', 'inactive');
+
 CREATE TABLE IF NOT EXISTS
   doc_unit (
     id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -14,7 +16,8 @@ CREATE TABLE IF NOT EXISTS
   document_number_counter (
     id SERIAL NOT NULL PRIMARY KEY,
     nextnumber INT NOT NULL,
-    currentyear INT NOT NULL
+    currentyear INT NOT NULL,
+    status status
   );
 
 COMMENT ON column document_number_counter.id IS 'this is a column comment'
