@@ -32,8 +32,6 @@ jobs:
         with:
           repository: lnschroeder/github-pages-playground-reports
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - name: Set current timestamp as environment variable
-        run: echo "NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
       - name: Download mermaid diagram
         uses: actions/download-artifact@v3
         with:
@@ -53,6 +51,7 @@ jobs:
         if: steps.erdiagram-change.outcome != 'success'
       - name: Push diagram files if the schema has changed
         run: |
+          echo "NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')" >> $GITHUB_ENV
           git config user.name "GitHubAction"
           git config user.email "<>"
           mv this-erdiagram.mmd latest-erdiagram.mmd
