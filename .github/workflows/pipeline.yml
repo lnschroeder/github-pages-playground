@@ -22,7 +22,6 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v3
-      - run: docker compose logs
       - name: Generate mermaid ER diagram
         run: docker compose up mermerd
         continue-on-error: true
