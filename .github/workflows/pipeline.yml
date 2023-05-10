@@ -50,18 +50,18 @@ jobs:
         id: erdiagram-check
         run: |
           if git status -s | grep latest-erdiagram.mmd; then
-            echo "file_changed=true" >> $GITHUB_OUTPUT
+            echo "file_changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "file_changed=false" >> $GITHUB_OUTPUT
           fi
-      - run: echo "--- ${{ steps.erdiagram-check.file_changed }}"
+      - run: echo "--- ${{ steps.erdiagram-check.outputs.file_changed }}"
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
-          filename: entity-relationship-diagrams/latest-erdiagram
+          filename: latest-erdiagram
           extractFromDB: false
           convertTo: svg
-        if: steps.erdiagram-check.file_changed == 'true'
+        if: steps.erdiagram-check.outputs.file_changed == 'true'
       - name: Push ER diagram files if the schema has changed
         run: |
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
@@ -74,7 +74,7 @@ jobs:
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" \
             -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
           git push origin main
-        if: steps.erdiagram-check.file_changed == 'true'
+        if: steps.erdiagram-check.outputs.file_changed == 'true'
         working-directory: ./entity-relationship-diagrams/
 
   build-github-pages:
