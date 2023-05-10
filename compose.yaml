@@ -51,7 +51,7 @@ services:
         ./mermerd \
           --runConfig /app/mermerdConfig.yaml \
           -c postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DATABASE} \
-          -o /app/this-erdiagram.mmd \
+          -o /app/latest-erdiagram.mmd \
           --debug
         chown ${MY_UID}:${MY_GID} /app/latest-erdiagram.mmd
     depends_on:
