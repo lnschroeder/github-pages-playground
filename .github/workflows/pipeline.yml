@@ -24,7 +24,7 @@ jobs:
         with:
           name: erdiagram
           retention-days: 3
-          path: erdiagram.mmd
+          path: this-erdiagram.mmd
 
   publish-entity-relationship-diagram:
     runs-on: ubuntu-latest
