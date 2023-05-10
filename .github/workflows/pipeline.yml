@@ -59,7 +59,7 @@ jobs:
       - name: Push ER diagram files if the schema has changed
         run: |
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
-          git config user.name "GitHubAction"
+          git config user.name "GitHubAction (${{ github.repository }})"
           git config user.email "<>"
           cp latest.mmd $NOW.mmd
           mv latest.svg $NOW.svg
