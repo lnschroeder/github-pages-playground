@@ -30,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: generate-entity-relationship-diagram
     if: ${{ github.ref == 'refs/heads/main' }}
+    env:
+      ER_DIAGRAM_PATH: entity-relationship-diagrams
     steps:
       - uses: actions/checkout@v3
         with:
@@ -39,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-          path: ./entity-relationship-diagrams/
+          path: $ER_DIAGRAM_PATH
       - name: Check if the ER diagram has changed
         id: erdiagram-check
         run: |
@@ -48,11 +50,11 @@ jobs:
           else
             echo "file_changed=false" >> $GITHUB_OUTPUT
           fi
-        working-directory: ./entity-relationship-diagrams/
+        working-directory: $ER_DIAGRAM_PATH
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
-          filename: entity-relationship-diagrams/latest
+          filename: $ER_DIAGRAM_PATH/latest
           extractFromDB: false
           convertTo: svg
         if: steps.erdiagram-check.outputs.file_changed == 'true'
@@ -67,10 +69,10 @@ jobs:
           git commit \
             -m "${{ github.event.head_commit.message }}" \
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" \
-            -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
+            -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/$ER_DIAGRAM_PATH/$NOW.mmd"
           git push origin main
         if: steps.erdiagram-check.outputs.file_changed == 'true'
-        working-directory: ./entity-relationship-diagrams/
+        working-directory: $ER_DIAGRAM_PATH
 
   build-github-pages:
     runs-on: ubuntu-latest
