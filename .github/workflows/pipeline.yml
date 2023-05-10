@@ -8,6 +8,9 @@ on:
   # Allow to run this workflow manually
   workflow_dispatch:
 
+env:
+  REPORT_REPOSITORY: lnschroeder/github-pages-playground-reports
+
 jobs:
   generate-entity-relationship-model:
     runs-on: ubuntu-latest
@@ -30,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: lnschroeder/github-pages-playground-reports
+          repository: ${{ env.REPORT_REPOSITORY }}
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
       - name: Download mermaid diagram
         uses: actions/download-artifact@v3
@@ -60,7 +63,7 @@ jobs:
           git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
           git commit -m "${{ github.event.head_commit.message }}" \
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" || \
-            -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ github.repository }}-reports/main/entity-relationship-diagrams/$NOW.mmd"
+            -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
             echo "ER Diagram has not changed"
           git push origin main
         if: steps.erdiagram-change.outcome != 'success'
