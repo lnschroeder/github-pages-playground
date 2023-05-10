@@ -45,14 +45,16 @@ jobs:
 #        run: git diff --quiet --no-index latest-erdiagram.mmd latest-erdiagram.mmd
 #        continue-on-error: true
 #        working-directory: ./entity-relationship-diagrams/
+      - run: git status -s | grep latest-erdiagram.mmd
       - name: Check if the ER diagram has changed
         id: erdiagram-check
         run: |
-          if git status -s | grep "latest-erdiagram.mmd"; then
+          if git status -s | grep latest-erdiagram.mmd; then
             echo "file_changed=true" >> $GITHUB_OUTPUT
           else
             echo "file_changed=false" >> $GITHUB_OUTPUT
           fi
+      - run: echo "--- ${{ steps.erdiagram-check.file_changed }}"
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
