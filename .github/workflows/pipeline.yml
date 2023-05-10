@@ -66,8 +66,8 @@ jobs:
           git add latest.mmd $NOW.mmd $NOW.svg
           git commit \
             -m "${{ github.event.head_commit.message }}" \
-            -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
-                Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
+            -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" \
+            -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
           git push origin main
         if: steps.erdiagram-check.outputs.file_changed == 'true'
         working-directory: ./entity-relationship-diagrams/
