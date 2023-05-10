@@ -52,7 +52,7 @@ jobs:
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
-          filename: entity-relationship-diagrams/this-erdiagram
+          filename: entity-relationship-diagrams/latest-erdiagram
           extractFromDB: false
           convertTo: svg
         if: steps.erdiagram-check.outputs.file_changed == 'true'
