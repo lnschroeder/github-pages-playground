@@ -51,13 +51,6 @@ jobs:
             echo "file_changed=false" >> $GITHUB_OUTPUT
           fi
         working-directory: ${{ env.ER_DIAGRAM_PATH }}
-#      - name: Convert .mmd to .svg
-#        uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
-#        with:
-#          filename: ${{ env.ER_DIAGRAM_PATH }}/latest
-#          extractFromDB: false
-#          convertTo: svg
-#        if: steps.erdiagram-check.outputs.file_changed == 'true'
       - name: Push ER diagram files if the schema has changed
         run: |
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
@@ -72,8 +65,6 @@ jobs:
           git push origin main
         if: steps.erdiagram-check.outputs.file_changed == 'true'
         working-directory: ${{ env.ER_DIAGRAM_PATH }}
-#        mv latest.svg $NOW.svg
-#        git add latest.mmd $NOW.mmd $NOW.svg
 
   build-github-pages:
     runs-on: ubuntu-latest
