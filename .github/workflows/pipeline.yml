@@ -12,21 +12,21 @@ env:
   REPORT_REPOSITORY: lnschroeder/github-pages-playground-reports
 
 jobs:
-  generate-entity-relationship-model:
+  generate-entity-relationship-diagram:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v3
       - name: Generate mermaid ER diagram
         run: docker compose up --quiet-pull mermerd
-      - name: Upload mermaid diagram
+      - name: Upload mermaid ER diagram
         uses: actions/upload-artifact@v3
         with:
           name: erdiagram
           retention-days: 3
-          path: this-erdiagram.mmd
+          path: erdiagram.mmd
 
-  publish-erdiagram-to-report-repo:
+  publish-entity-relationship-diagram:
     runs-on: ubuntu-latest
     needs: generate-entity-relationship-model
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -35,31 +35,31 @@ jobs:
         with:
           repository: ${{ env.REPORT_REPOSITORY }}
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - name: Download mermaid diagram
+      - name: Download mermaid ER diagram
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
           path: ./entity-relationship-diagrams/
-      - name: Check if the erdiagram has changed
+      - name: Check if the ER diagram has changed
         id: erdiagram-change
-        run: git diff --quiet --no-index this-erdiagram.mmd latest-erdiagram.mmd
+        run: git diff --quiet --no-index erdiagram.mmd latest-erdiagram.mmd
         continue-on-error: true
         working-directory: ./entity-relationship-diagrams/
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
-          filename: entity-relationship-diagrams/this-erdiagram
+          filename: entity-relationship-diagrams/erdiagram
           extractFromDB: false
           convertTo: svg
         if: steps.erdiagram-change.outcome != 'success'
-      - name: Push diagram files if the schema has changed
+      - name: Push ER diagram files if the schema has changed
         run: |
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
           git config user.name "GitHubAction"
           git config user.email "<>"
-          mv this-erdiagram.mmd latest-erdiagram.mmd
+          mv erdiagram.mmd latest-erdiagram.mmd
           cp latest-erdiagram.mmd $NOW.mmd
-          mv this-erdiagram.svg $NOW.svg
+          mv erdiagram.svg $NOW.svg
           git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
           git commit -m "${{ github.event.head_commit.message }}" \
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" || \
@@ -76,13 +76,13 @@ jobs:
       - generate-entity-relationship-model
     steps:
       - uses: actions/checkout@v3
-      - name: Download ER diagrams
+      - name: Download ER diagram
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
           path: _site
       - name: Upload GitHub Pages
-        uses: actions/upload-pages-artifact@v1.0.7
+        uses: actions/upload-pages-artifact@v1
         with:
           path: _site
 
@@ -99,6 +99,6 @@ jobs:
     steps:
       - name: Deploy GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2.0.0
+        uses: actions/deploy-pages@v2
         env:
           GITHUB_TOKEN: ${{ github.token }}
