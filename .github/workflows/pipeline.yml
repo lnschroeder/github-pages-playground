@@ -39,7 +39,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: erdiagram
-          path: ./entity-relationship-diagrams/
+#          path: ./entity-relationship-diagrams/
 #      - name: Check if the ER diagram has changed
 #        id: erdiagram-change
 #        run: git diff --quiet --no-index latest-erdiagram.mmd latest-erdiagram.mmd
