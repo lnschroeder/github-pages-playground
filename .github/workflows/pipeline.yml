@@ -40,11 +40,6 @@ jobs:
         with:
           name: erdiagram
           path: ./entity-relationship-diagrams/
-#      - name: Check if the ER diagram has changed
-#        id: erdiagram-change
-#        run: git diff --quiet --no-index latest-erdiagram.mmd latest-erdiagram.mmd
-#        continue-on-error: true
-#        working-directory: ./entity-relationship-diagrams/
       - name: Check if the ER diagram has changed
         id: erdiagram-check
         run: |
@@ -57,11 +52,10 @@ jobs:
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
-          filename: latest-erdiagram
+          filename: entity-relationship-diagrams/this-erdiagram
           extractFromDB: false
           convertTo: svg
         if: steps.erdiagram-check.outputs.file_changed == 'true'
-        working-directory: ./entity-relationship-diagrams/
       - name: Push ER diagram files if the schema has changed
         run: |
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
