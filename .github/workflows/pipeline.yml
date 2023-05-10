@@ -75,7 +75,6 @@ jobs:
             -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
           git push origin main
         if: steps.erdiagram-check.outputs.file_changed == 'true'
-        working-directory: ./entity-relationship-diagrams/
 
   build-github-pages:
     runs-on: ubuntu-latest
