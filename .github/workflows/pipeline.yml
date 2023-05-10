@@ -57,7 +57,7 @@ jobs:
 #          filename: ${{ env.ER_DIAGRAM_PATH }}/latest
 #          extractFromDB: false
 #          convertTo: svg
-        if: steps.erdiagram-check.outputs.file_changed == 'true'
+#        if: steps.erdiagram-check.outputs.file_changed == 'true'
       - name: Push ER diagram files if the schema has changed
         run: |
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
