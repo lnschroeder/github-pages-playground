@@ -53,7 +53,7 @@ services:
           -c postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DATABASE} \
           -o /app/this-erdiagram.mmd \
           --debug
-        chown ${MY_UID}:${MY_GID} /app/this-erdiagram.mmd
+        chown ${MY_UID}:${MY_GID} /app/latest-erdiagram.mmd
     depends_on:
       flyway-migrate:
         condition: service_completed_successfully
