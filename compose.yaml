@@ -51,9 +51,9 @@ services:
         ./mermerd \
           --runConfig /app/mermerdConfig.yaml \
           -c postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DATABASE} \
-          -o /app/latest-erdiagram.mmd \
+          -o /app/latest.mmd \
           --debug
-        chown ${MY_UID}:${MY_GID} /app/latest-erdiagram.mmd
+        chown ${MY_UID}:${MY_GID} /app/latest.mmd
     depends_on:
       flyway-migrate:
         condition: service_completed_successfully

@@ -24,7 +24,7 @@ jobs:
         with:
           name: erdiagram
           retention-days: 3
-          path: latest-erdiagram.mmd
+          path: latest.mmd
 
   publish-entity-relationship-diagram:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
       - name: Check if the ER diagram has changed
         id: erdiagram-check
         run: |
-          if git status -s | grep latest-erdiagram.mmd; then
+          if git status -s | grep latest.mmd; then
             echo "file_changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "file_changed=false" >> $GITHUB_OUTPUT
@@ -52,7 +52,7 @@ jobs:
       - name: Convert .mmd to .svg
         uses: lnschroeder/export-mermaid-erdiagram-action@use-mermerd-binary
         with:
-          filename: entity-relationship-diagrams/latest-erdiagram
+          filename: entity-relationship-diagrams/latest
           extractFromDB: false
           convertTo: svg
         if: steps.erdiagram-check.outputs.file_changed == 'true'
@@ -61,9 +61,9 @@ jobs:
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
           git config user.name "GitHubAction"
           git config user.email "<>"
-          cp latest-erdiagram.mmd $NOW.mmd
-          mv latest-erdiagram.svg $NOW.svg
-          git add latest-erdiagram.mmd $NOW.mmd $NOW.svg
+          cp latest.mmd $NOW.mmd
+          mv latest.svg $NOW.svg
+          git add latest.mmd $NOW.mmd $NOW.svg
           git commit -m "${{ github.event.head_commit.message }}" \
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}" \
             -m "Live Editor: https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/entity-relationship-diagrams/$NOW.mmd"
