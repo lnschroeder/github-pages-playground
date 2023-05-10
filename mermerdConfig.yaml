@@ -5,4 +5,4 @@ selectedTables:
   - document_number_counter
 showDescriptions:
   - columnComments
-#  - enumValues
+  - enumValues
