@@ -60,8 +60,7 @@ jobs:
           git add latest.mmd $NOW.mmd
           git commit \
             -m "${{ github.event.head_commit.message }}" \
-            -m "[From commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})" \
-            -m "[Live Editor](https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/${{ env.ER_DIAGRAM_PATH }}/$NOW.mmd)"
+            -m "[From commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
           git push origin main
           echo "Pushed reports to ${{ github.server_url }}/${{ env.REPORT_REPOSITORY }}" >> $GITHUB_STEP_SUMMARY
         if: steps.erdiagram-check.outputs.file_changed == 'true'
