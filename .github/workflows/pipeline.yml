@@ -25,6 +25,13 @@ jobs:
           name: erdiagram
           retention-days: 3
           path: latest.mmd
+      - name: Generate list using Markdown
+        run: |
+          echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+          echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
+          echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
+          echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
 
   publish-entity-relationship-diagram:
     runs-on: ubuntu-latest
@@ -53,7 +60,6 @@ jobs:
         working-directory: ${{ env.ER_DIAGRAM_PATH }}
       - name: Push ER diagram files if the schema has changed
         run: |
-          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
           git config user.name "${{ github.repository }}"
           git config user.email "<>"
