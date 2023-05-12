@@ -63,6 +63,7 @@ jobs:
           git add latest.mmd $NOW.mmd
           git commit \
             -m $"${{ github.event.head_commit.message }}\n \
+          
             [From commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) \
             [Live Editor](https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/${{ env.ER_DIAGRAM_PATH }}/$NOW.mmd)"
           git push origin main
