@@ -33,6 +33,7 @@ jobs:
     env:
       ER_DIAGRAM_PATH: entity-relationship-diagrams
     environment:
+      name: github-pages
       url: ${{ env.ER_DIAGRAM_PATH }}
     steps:
       - uses: actions/checkout@v3
