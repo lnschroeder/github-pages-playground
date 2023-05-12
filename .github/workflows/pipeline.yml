@@ -65,7 +65,7 @@ jobs:
 
             [Live Editor](https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/${{ env.ER_DIAGRAM_PATH }}/$NOW.mmd)"
           git push origin main
-          echo "Pushed to ${{ github.server_url }}/${{ env.REPORT_REPOSITORY }}" >> $GITHUB_STEP_SUMMARY
+          echo "Pushed reports to ${{ github.server_url }}/${{ env.REPORT_REPOSITORY }}" >> $GITHUB_STEP_SUMMARY
         if: steps.erdiagram-check.outputs.file_changed == 'true'
         working-directory: ${{ env.ER_DIAGRAM_PATH }}
 
