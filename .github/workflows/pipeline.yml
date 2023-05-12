@@ -32,6 +32,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     env:
       ER_DIAGRAM_PATH: entity-relationship-diagrams
+    environment:
+      url: ${{ env.ER_DIAGRAM_PATH }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -59,7 +61,7 @@ jobs:
           cp latest.mmd $NOW.mmd
           git add latest.mmd $NOW.mmd
           git commit \
-            -m "${{ github.event.head_commit.message }} \
+            -m $"${{ github.event.head_commit.message }}\n \
             [From commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) \
             [Live Editor](https://mermaid.live/edit?code=https://raw.githubusercontent.com/${{ env.REPORT_REPOSITORY }}/main/${{ env.ER_DIAGRAM_PATH }}/$NOW.mmd)"
           git push origin main
