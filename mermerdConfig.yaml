@@ -3,6 +3,6 @@ useAllTables: False
 selectedTables:
   - doc_unit
   - document_number_counter
-#showDescriptions:
-#  - columnComments
-#  - enumValues
+showDescriptions:
+  - columnComments
+  - enumValues
