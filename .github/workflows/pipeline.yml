@@ -53,6 +53,7 @@ jobs:
         working-directory: ${{ env.ER_DIAGRAM_PATH }}
       - name: Push ER diagram files if the schema has changed
         run: |
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
           NOW=$(TZ=Europe/Berlin date +'%Y-%m-%dT%H%M%S')
           git config user.name "${{ github.repository }}"
           git config user.email "<>"
