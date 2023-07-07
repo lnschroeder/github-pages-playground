@@ -65,7 +65,7 @@ jobs:
           cp latest.mmd $NOW.mmd
           git add latest.mmd $NOW.mmd
           git commit \
-            -m "${{ toJson(github.event.head_commit.message) }}" \
+            -m ${{ toJson(github.event.head_commit.message) }} \
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           git push origin main
           echo "Pushed reports to ${{ github.server_url }}/${{ env.REPORT_REPOSITORY }}" >> $GITHUB_STEP_SUMMARY
