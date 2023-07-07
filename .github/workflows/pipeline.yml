@@ -69,7 +69,7 @@ jobs:
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           git push origin main
           echo "Pushed reports to ${{ github.server_url }}/${{ env.REPORT_REPOSITORY }}" >> $GITHUB_STEP_SUMMARY
-        if: steps.erdiagram-check.outputs.file_changed == 'true'
+#        if: steps.erdiagram-check.outputs.file_changed == 'true'
         working-directory: ${{ env.ER_DIAGRAM_PATH }}
 
   build-github-pages:
