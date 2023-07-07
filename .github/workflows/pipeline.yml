@@ -58,8 +58,9 @@ jobs:
           git config user.email "<>"
           cp latest.mmd $NOW.mmd
           git add latest.mmd $NOW.mmd
+          ESCAPED_COMMIT_MESSAGE=$(echo ${{ github.event.head_commit.message }} | sed 's/"/\\"/g')
           git commit \
-            -m "${{ github.event.head_commit.message }}" \
+            -m $ESCAPED_COMMIT_MESSAGE \
             -m "From commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           git push origin main
           echo "Pushed reports to ${{ github.server_url }}/${{ env.REPORT_REPOSITORY }}" >> $GITHUB_STEP_SUMMARY
