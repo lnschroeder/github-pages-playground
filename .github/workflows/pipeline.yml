@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          TEST=${{ github.event.head_commit.message }} | sed 's/"/X/g'
+          TEST=$(echo ${{ github.event.head_commit.message }} | sed 's/"/X/g')
           echo $TEST
 #  generate-entity-relationship-diagram:
 #    runs-on: ubuntu-latest
