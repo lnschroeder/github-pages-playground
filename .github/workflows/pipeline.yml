@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          MSG=${{ github.event.head_commit.message }}
-          echo -e $MSG
+          MSG="${{ github.event.head_commit.message }}"
+          echo $MSG
 #  generate-entity-relationship-diagram:
 #    runs-on: ubuntu-latest
 #    if: ${{ github.ref == 'refs/heads/main' }}
